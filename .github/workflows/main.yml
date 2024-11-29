@@ -19,10 +19,14 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x' # Specify the correct .NET version
+          dotnet-version: '8.0.303' 
+          
 
-      - name: Install dependencies
+      - name: Restore dependencies
         run: dotnet restore
+
+      - name: Build the project
+        run: dotnet build --no-restore
 
       - name: Install Playwright browsers
         run: pwsh bin/Debug/net8.0/playwright.ps1 install
