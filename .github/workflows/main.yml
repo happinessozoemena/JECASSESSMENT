@@ -5,26 +5,27 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up .NET environment
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0'
+          dotnet-version: '8.0.x' # Specify the correct .NET version
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: dotnet restore
 
-      # Step 4: Run tests
+      - name: Install Playwright browsers
+        run: pwsh bin/Debug/net8.0/playwright.ps1 install
+
       - name: Run Playwright tests
         run: dotnet test
